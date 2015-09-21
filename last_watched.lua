@@ -65,7 +65,8 @@ function load_file_handler (event)
          datastore_input = tempfile()
       end
    end
-   datastore_input[global_filename] = 0
+   local stripped_str = strip_string(global_filename)
+   datastore_input[get_non_numbers_from_str(stripped_str)] = get_numbers_from_str(stripped_str)
 end
 
 function save_file_handler (event)
@@ -76,3 +77,24 @@ datastore_input.gundam = datastore_input.gundam+1
 
 mp.register_event("file-loaded", load_file_handler)
 mp.register_event("shutdown", save_file_handler)
+
+
+
+--String manipulation functions
+
+function strip_string (str)
+-- Strip string of any ",', \ and remove any text inside (,[,{,,< limiters.
+	str = (str:gsub("['\\\"]",""))
+	str = (str:gsub("[[{<]","("))
+	str = (str:gsub("[]}>]",")"))
+	str = str:gsub('%b()', '')
+	return str
+end
+
+function get_numbers_from_str (str)
+	return (str:gsub("%D",""))
+end
+
+function get_non_numbers_from_str (str)
+	return (str:gsub("%d",""))
+end
