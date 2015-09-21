@@ -1,9 +1,9 @@
 mputils = require 'mp.utils'
 test_file = { gundam = 1, breaking_bad = 2 }
-LAST_WATCHED_FILENAME = "LAST_WATCHED_MPV"
-last_watched_input = dofile(LAST_WATCHED_FILENAME) or {}
-last_watched_dir =  "./"
-last_watched_filename = ""
+DATASTORE_FILENAME = "LAST_WATCHED_MPV"
+datastore_input = dofile(DATASTORE_FILENAME) or {}
+global_dir =  "./"
+global_filename = ""
 print("Hello World!!!")
 
 function simple_print_table(table)
@@ -14,7 +14,7 @@ end
 
 
 
-function last_watched_write_data_file(table,path,filename)
+function write_data_file(table,path,filename)
    -- Writes the table to file
    -- Doesn't do nested table
    -- Only supporst writing one table to the file, that table is then returned
@@ -42,37 +42,37 @@ function last_watched_write_data_file(table,path,filename)
       io.write("\n")
 end
 
-function last_watched_load_file_handler (event)
+function load_file_handler (event)
    print("File loaded!!!!!")
 
    local path = mp.get_property("path", "")
    local dir, filename = mputils.split_path(path)
-   if last_watched_dir == "." then
-      last_watched_dir = "./"
+   if global_dir == "." then
+      global_dir = "./"
    end
    if dir == "." then
       dir = "./"
    end
-   if dir ~= last_watched_dir then
-      last_watched_save_file({})
-      last_watched_filename = filename
-      last_watched_dir = dir
+   if dir ~= global_dir then
+      save_file_handler({})
+      global_filename = filename
+      global_dir = dir
       
-      print(last_watched_dir..LAST_WATCHED_FILENAME)
-      tempfile = loadfile(last_watched_dir..LAST_WATCHED_FILENAME)
-      last_watched_input = {}
+      print(global_dir..DATASTORE_FILENAME)
+      tempfile = loadfile(global_dir..DATASTORE_FILENAME)
+      datastore_input = {}
       if tempfile then
-         last_watched_input = tempfile()
+         datastore_input = tempfile()
       end
    end
-   last_watched_input[last_watched_filename] = 0
+   datastore_input[global_filename] = 0
 end
 
-function last_watched_save_file (event)
-   last_watched_write_data_file(last_watched_input,last_watched_dir,LAST_WATCHED_FILENAME)
+function save_file_handler (event)
+   write_data_file(datastore_input,global_dir,DATASTORE_FILENAME)
 end
 
-last_watched_input.gundam = last_watched_input.gundam+1
+datastore_input.gundam = datastore_input.gundam+1
 
-mp.register_event("file-loaded", last_watched_load_file_handler)
-mp.register_event("shutdown", last_watched_save_file)
+mp.register_event("file-loaded", load_file_handler)
+mp.register_event("shutdown", save_file_handler)
