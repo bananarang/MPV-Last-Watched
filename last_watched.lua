@@ -67,7 +67,6 @@ mp.register_event("shutdown", save_file_handler)
 
 function strip_string (str)
 -- Strip string of any ",', \ and remove any text inside (,[,{,,< limiters.
-	--str = (str:gsub("['\\\"]",""))
 	str = (str:gsub("[[{<]","("))
 	str = (str:gsub("[]}>]",")"))
 	str = str:gsub('%b()', '')
