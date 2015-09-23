@@ -2,7 +2,7 @@ require 'lua-table-persistence/persistence'
 mputils = require 'mp.utils'
 test_file = { gundam = 1, breaking_bad = 2 }
 DATASTORE_FILENAME = "LAST_WATCHED_MPV"
-datastore_input = dofile(DATASTORE_FILENAME) or {}
+datastore_input = persistence.load(DATASTORE_FILENAME) or {}
 global_dir =  "./"
 global_filename = ""
 print("Hello World!!!")
@@ -17,30 +17,8 @@ end
 
 function write_data_file(table,path,filename)
    -- Writes the table to file
-   -- Doesn't do nested table
-   -- Only supporst writing one table to the file, that table is then returned
-   io.output(path..filename)
-   io.write("\n")
-   io.write("return ")
-   io.write("\n")
-   io.write("{")
-   io.write("\n")
-   first = true
-      for key, value in pairs(table) do
-         if not first then
-            io.write(" , ")
-            io.write("\n")
-         end
-         first = false
-         io.write("[\""..key.."\"]")
-         io.write( " = " )
-         
-         io.write(value)
-         io.write("\n")
-
-      end
-      io.write("}")
-      io.write("\n")
+   print("SAVING " .. path..filename)
+   persistence.store(path..filename,table)
 end
 
 function load_file_handler (event)
@@ -48,25 +26,28 @@ function load_file_handler (event)
 
    local path = mp.get_property("path", "")
    local dir, filename = mputils.split_path(path)
+   print("filename is " .. filename)
    if global_dir == "." then
       global_dir = "./"
    end
    if dir == "." then
       dir = "./"
    end
+   global_filename = filename
    if dir ~= global_dir then
       save_file_handler({})
-      global_filename = filename
       global_dir = dir
       
       print(global_dir..DATASTORE_FILENAME)
-      tempfile = loadfile(global_dir..DATASTORE_FILENAME)
+      tempfile = persistence.load(global_dir..DATASTORE_FILENAME)
       datastore_input = {}
       if tempfile then
-         datastore_input = tempfile()
+         datastore_input = tempfile
       end
    end
+    print("Global filename is "..global_filename)
    local stripped_str = strip_string(global_filename)
+   print("Stripped str is"..stripped_str.."fin")
    datastore_input[get_non_numbers_from_str(stripped_str)] = get_numbers_from_str(stripped_str)
 end
 
@@ -74,10 +55,11 @@ function save_file_handler (event)
    write_data_file(datastore_input,global_dir,DATASTORE_FILENAME)
 end
 
-datastore_input.gundam = datastore_input.gundam+1
+--datastore_input.gundam = datastore_input.gundam+1
 
 mp.register_event("file-loaded", load_file_handler)
 mp.register_event("shutdown", save_file_handler)
+
 
 
 
@@ -85,7 +67,7 @@ mp.register_event("shutdown", save_file_handler)
 
 function strip_string (str)
 -- Strip string of any ",', \ and remove any text inside (,[,{,,< limiters.
-	str = (str:gsub("['\\\"]",""))
+	--str = (str:gsub("['\\\"]",""))
 	str = (str:gsub("[[{<]","("))
 	str = (str:gsub("[]}>]",")"))
 	str = str:gsub('%b()', '')
