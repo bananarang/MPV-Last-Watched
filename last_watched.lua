@@ -1,3 +1,4 @@
+require 'lua-table-persistence/persistence'
 mputils = require 'mp.utils'
 test_file = { gundam = 1, breaking_bad = 2 }
 DATASTORE_FILENAME = "LAST_WATCHED_MPV"

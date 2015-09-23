@@ -1,5 +1,6 @@
 * Quick set up
-Drop this file in your mpv scripts folder, (~/.config/mpv/scripts) on linux, and then watch shows.
+
+Drop this folder in your mpv scripts folder, (~/.config/mpv/scripts) on linux, and then watch shows.
 A file will be created in that directory, LAST_WATCHED_MPV
 This file will contain a simple list of shows, and what episode of them you last watched. 
 
@@ -15,3 +16,6 @@ LAST_WATCHED_MPV is read via dofile, so a could carefully crafted filename on a 
 This should be pretty obvious though, as it would be in the filename, so should only be an issue if random people can submit random files to your mpv...
 
 
+* Note
+--script=~/.config/mpv/scripts/last_watched/last_watched.lua
+Points to it directly, but will probably miss the persistence script it depends on.
