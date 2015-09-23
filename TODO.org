@@ -3,3 +3,16 @@
 - Remove tests, gundam and breaking bad silly tests
 - Remove hello world!!! print out
 - Make it check episode count, and only increment the last_watched if it's actually higher.
+
+- Perhaps add an option for a per episode file, or one large file in the mpv home folder, perhaps add a appropriate arg for mpv, so like
+#+BEGIN_SRC 
+mpv --lastwatched
+
+Found X matches
+Match 0
+Match 1
+Match ...
+
+#+END_SRC
+- Use the property media-title
+  [[http://mpv.io/manual/master/#property-list]]

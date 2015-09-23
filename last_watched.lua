@@ -45,10 +45,19 @@ function load_file_handler (event)
          datastore_input = tempfile
       end
    end
-    print("Global filename is "..global_filename)
+   save_current_file()
+end
+
+function save_current_file ()
    local stripped_str = strip_string(global_filename)
-   print("Stripped str is"..stripped_str.."fin")
-   datastore_input[get_non_numbers_from_str(stripped_str)] = get_numbers_from_str(stripped_str)
+   local number = get_numbers_from_str(stripped_str)
+   local curr_percent_into = mp.get_property("percent-pos","")
+   local curr_time_into = mp.get_property("time-pos","")
+
+   datastore_input[get_non_numbers_from_str(stripped_str)]
+      = { ["episode_number"] = number,
+         ["current_time"] = curr_time_into,
+         ["Percent_Completed"] = curr_percent_into}
 end
 
 function save_file_handler (event)
