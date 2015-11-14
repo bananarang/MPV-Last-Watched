@@ -1,11 +1,9 @@
 require 'lua-table-persistence/persistence'
 mputils = require 'mp.utils'
-test_file = { gundam = 1, breaking_bad = 2 }
-DATASTORE_FILENAME = "LAST_WATCHED_MPV"
+DATASTORE_FILENAME = ".LAST_WATCHED_MPV"
 datastore_input = persistence.load(DATASTORE_FILENAME) or {}
 global_dir =  "./"
 global_filename = ""
-print("Hello World!!!")
 
 function simple_print_table(table)
    for key,value in pairs(table) do
