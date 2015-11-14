@@ -54,10 +54,20 @@ function save_current_file ()
    local curr_percent_into = mp.get_property("percent-pos","")
    local curr_time_into = mp.get_property("time-pos","")
 
-   datastore_input[get_non_numbers_from_str(stripped_str)]
-      = { ["episode_number"] = number,
+   local episode_name = get_non_numbers_from_str(stripped_str)
+
+   local original_episode_map = {}
+   if datastore_input[episode_name] ~= nil then
+      original_episode_map = datastore_input[episode_name]["episode_map"]
+   end
+
+   datastore_input[episode_name]
+      = { ["most_recent_opened_episode_number"] = number,
          ["current_time"] = curr_time_into,
-         ["Percent_Completed"] = curr_percent_into}
+         ["percent_completed"] = curr_percent_into,
+         ["episode_map"] = original_episode_map
+        }
+   datastore_input[episode_name]["episode_map"][number] = curr_percent_into .. "%"
 end
 
 function save_file_handler (event)
