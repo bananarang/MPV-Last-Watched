@@ -19,3 +19,5 @@ This should be pretty obvious though, as it would be in the filename, so should 
 * Note
 --script=~/.config/mpv/scripts/last_watched/last_watched.lua
 Points to it directly, but will probably miss the persistence script it depends on.
+
+
