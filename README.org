@@ -7,11 +7,11 @@ Run this inside the cloned repository.
 * Quick set up
 
 Drop this folder in your mpv scripts folder, (~/.config/mpv/scripts) on linux, and then watch shows.
-A file will be created in that directory, LAST_WATCHED_MPV
+A file will be created in that directory, .LAST_WATCHED_MPV.MPVWTC
 This file will contain a simple list of shows, and what episode of them you last watched. 
 
 * How it works
-Upon opening a file, a .LAST_WATCHED_MPV is checked for in that directory, if one doesn't exist, it will be made.
+Upon opening a file, a .LAST_WATCHED_MPV.MPVWTC is checked for in that directory, if one doesn't exist, it will be made.
 The episode is then stripped of some special characters, and anything in brackets, or parens, and then has it's numbers parsed out from the rest of it.
 These then form the episode name, and episode number, and are written to the text file, plus put into a map of episodes, plus how far into them you are.
 In total, the text file will contain for each series, 
@@ -24,14 +24,14 @@ Series must be consistently named.
 
 
 * Warnings
-This will overrite any other file called LAST_WATCHED_MPV in the directory of the media. 
+This will overrite any other file called .LAST_WATCHED_MPV.MPVWTC in the directory of the media. 
 
-LAST_WATCHED_MPV is read via dofile, so a could carefully crafted filename on a media file could carry a bad payload, and inject whatever script it wants into mpv.
+.LAST_WATCHED_MPV.MPVWTC is read via dofile, so a could carefully crafted filename on a media file could carry a bad payload, and inject whatever script it wants into mpv.
 This should be pretty obvious though, as it would be in the filename, so should only be an issue if random people can submit random files to your mpv...
 
 If the media file is only open for a second or two, the text file might not be updated.
 
-File is .LAST_WATCHED_MPV, so it'll be hidden.
+File is .LAST_WATCHED_MPV.MPVWTC, so it'll be hidden.
 
 * Note
 --script=~/.config/mpv/scripts/last_watched/last_watched.lua

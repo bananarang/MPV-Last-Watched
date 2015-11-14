@@ -1,6 +1,6 @@
 require 'lua-table-persistence/persistence'
 mputils = require 'mp.utils'
-DATASTORE_FILENAME = ".LAST_WATCHED_MPV"
+DATASTORE_FILENAME = ".LAST_WATCHED_MPV.MPVWTC"
 datastore_input = persistence.load(DATASTORE_FILENAME) or {}
 global_dir =  "./"
 global_filename = ""
