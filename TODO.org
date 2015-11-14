@@ -16,3 +16,5 @@ Match ...
 #+END_SRC
 - Use the property media-title
   [[http://mpv.io/manual/master/#property-list]]
+  
+- Add launch option to start mpv, and open current episode. (Would only work folders with only one show.)
