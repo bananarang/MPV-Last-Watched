@@ -19,6 +19,8 @@ In total, the text file will contain for each series,
  - How far into that episode you were
  - Percentage into that episode you got
  - Map of episodes opened, and percentage gotten into each one.
+   
+Series must be consistently named.
 
 * Warnings
 This will overrite any other file called LAST_WATCHED_MPV in the directory of the media. 

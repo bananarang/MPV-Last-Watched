@@ -45,11 +45,12 @@ function load_file_handler (event)
          datastore_input = tempfile
       end
    end
-   save_current_file()
+   update_current_database_object()
 end
 
-function save_current_file ()
+function update_current_database_object ()
    local stripped_str = strip_string(global_filename)
+   print("Stripped str is " .. stripped_str)
    local number = get_numbers_from_str(stripped_str)
    local curr_percent_into = mp.get_property("percent-pos","")
    local curr_time_into = mp.get_property("time-pos","")
@@ -85,17 +86,19 @@ mp.register_event("shutdown", save_file_handler)
 --String manipulation functions
 
 function strip_string (str)
--- Strip string of any ",', \ and remove any text inside (,[,{,,< limiters.
-	str = (str:gsub("[[{<]","("))
-	str = (str:gsub("[]}>]",")"))
-	str = str:gsub('%b()', '')
-	return str
+   -- Remove extension first
+   str = str:gsub("%.([%w%-]+)$", "")
+   -- Strip string of any ",', \ and remove any text inside (,[,{,,< limiters.
+   str = (str:gsub("[[{<]","("))
+   str = (str:gsub("[]}>]",")"))
+   str = str:gsub('%b()', '')
+   return str
 end
 
 function get_numbers_from_str (str)
-	return (str:gsub("%D",""))
+   return (str:gsub("%D",""))
 end
 
 function get_non_numbers_from_str (str)
-	return (str:gsub("%d",""))
+   return (str:gsub("%d",""))
 end
