@@ -34,6 +34,7 @@ function load_file_handler (event)
    end
    global_filename = filename
    if dir ~= global_dir then
+      --The last episode was written in by end-file handler
       save_file_handler({})
       global_dir = dir
       
@@ -47,7 +48,8 @@ function load_file_handler (event)
 end
 
 function update_current_database_object ()
-   local stripped_str = strip_string(global_filename)
+   name = global_filename
+   local stripped_str = strip_string(name) --global_filename)
    local number = get_numbers_from_str(stripped_str)
    local curr_percent_into = mp.get_property("percent-pos","")
    local curr_time_into = mp.get_property("time-pos","")
@@ -73,19 +75,20 @@ function save_file_handler (event)
    write_data_file(datastore_input,global_dir,DATASTORE_FILENAME)
 end
 
-function end_load_file_handler()
-   local orig_number = global_current_number
-   load_file_handler()
-   datastore_input[global_episode_name]["episode_map"][orig_number] = "100%"
-end
    
 
---datastore_input.gundam = datastore_input.gundam+1
+
+function file_unload_handler(x,y,z)
+   print("Testing unloading")
+   print(mp.get_property("percent-pos",""))
+   load_file_handler()
+end
+
 
 mp.register_event("file-loaded", load_file_handler)
 mp.register_event("shutdown", save_file_handler)
-mp.register_event("end-file",end_load_file_handler)
-
+--mp.register_event("end-file",end_load_file_handler)
+mp.add_hook("on_unload",50,file_unload_handler)
 
 
 --String manipulation functions
