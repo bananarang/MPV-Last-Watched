@@ -31,7 +31,6 @@ This will overrite any other file called .LAST_WATCHED_MPV.MPVWTC in the directo
 .LAST_WATCHED_MPV.MPVWTC is read via dofile, so a could carefully crafted filename on a media file could carry a bad payload, and inject whatever script it wants into mpv.
 This should be pretty obvious though, as it would be in the filename, so should only be an issue if random people can submit random files to your mpv...
 
-If the media file is only open for a second or two, the text file might not be updated.
 
 File is .LAST_WATCHED_MPV.MPVWTC, so it'll be hidden.
 
