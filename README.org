@@ -20,7 +20,9 @@ In total, the text file will contain for each series,
  - Percentage into that episode you got
  - Map of episodes opened, and percentage gotten into each one.
    
-Series must be consistently named.
+Series must be consistently named, namings with the episode name in it tend to not work well. 
+Maybe in the future, check all media files in directory, and find a substring they all contain, and use that for title?
+Meh, complicates things.
 
 
 * Warnings

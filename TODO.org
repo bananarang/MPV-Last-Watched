@@ -1,7 +1,5 @@
 * TODO
 - Test most recent changes didn't break shit.
-- Remove tests, gundam and breaking bad silly tests
-- Remove hello world!!! print out
 - Make it check episode count, and only increment the last_watched if it's actually higher.
 
 - Perhaps add an option for a per episode file, or one large file in the mpv home folder, perhaps add a appropriate arg for mpv, so like
