@@ -18,6 +18,8 @@ end
 function write_data_file(table,path,filename)
    -- Writes the table to file
    print("SAVING " .. path..filename)
+   datastore_input[""] = nil --I should really just restructure this whole mess so that
+   -- "" is never entered, but oh well.
    persistence.store(path..filename,table)
 end
 
